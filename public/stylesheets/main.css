@@ -1,0 +1,14 @@
+#container {
+	width: 100%;
+}
+body {
+	width: 100%;
+}
+.react-bs-table-container {
+	width: 90%;
+	margin: auto;
+}
+.btn-group btn-group-xs {
+	width:200px;
+	margin-left: 40px;
+}
