@@ -28,7 +28,8 @@ var MyBootstrapTable = React.createClass({
 		for(var index in data) {
 			var record = data[index];
 			labRecords.push({
-				"id" : record.patient_id,
+				"id" : parseInt(index)+1,
+				"patient-id" : record.patient_id,
 				"name" : record.patient_name,
 				"test" : record.test_name,
 				"date" : getDateFromTime(record.test_time),
@@ -54,7 +55,8 @@ var MyBootstrapTable = React.createClass({
 	render: function() {
 		return (
 				<BootstrapTable data={dataSet} search={true} striped={true} hover={true} height="500px">
-			      <TableHeaderColumn isKey={true} dataSort={true} dataField="id">Patient Id</TableHeaderColumn>
+				  <TableHeaderColumn isKey={true} dataSort={true} dataField="id">#</TableHeaderColumn>
+			      <TableHeaderColumn dataSort={true} dataField="patient-id">Patient Id</TableHeaderColumn>
 			      <TableHeaderColumn dataSort={true} dataField="name">Name</TableHeaderColumn>
 			      <TableHeaderColumn dataSort={true} dataField="test">Test</TableHeaderColumn>
 			      <TableHeaderColumn dataSort={true} dataField="date">Date</TableHeaderColumn>
