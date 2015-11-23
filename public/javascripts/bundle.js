@@ -18943,25 +18943,39 @@ function getDateFromTime(timeInSeconds) {
 	}
 	return dd + '/' + mm + '/' + yyyy;
 }
-var dataSet;
+var dataSet, reportDataMap;
+
+function linkifyReportFormat(cell, row) {
+	if (row.serial in reportDataMap) {
+		var url = "/lab-record/" + reportDataMap[row.serial].id;
+		return '<a href="' + url + '" target="_blank"> Link </a> ';
+	} else {
+		return '--';
+	}
+}
+
 var MyBootstrapTable = React.createClass({
 	displayName: 'MyBootstrapTable',
 
 	getInitialState: function () {
 		dataSet = new TableDataSet([]);
+		reportDataMap = {};
 		return { data: [] };
 	},
 	parseNetworkResponse: function (data) {
 		var labRecords = [];
 		for (var index in data) {
 			var record = data[index];
+			var serialId = parseInt(index) + 1;
+			if (record.is_report_generated) {
+				reportDataMap[serialId] = record;
+			}
 			labRecords.push({
-				"id": parseInt(index) + 1,
+				"serial": serialId,
 				"patient-id": record.patient_id,
 				"name": record.patient_name,
 				"test": record.test_name,
-				"date": getDateFromTime(record.test_time),
-				"report": "Link"
+				"date": getDateFromTime(record.test_time)
 			});
 		}
 		return labRecords;
@@ -18986,7 +19000,7 @@ var MyBootstrapTable = React.createClass({
 			{ data: dataSet, search: true, striped: true, hover: true, height: '500px' },
 			React.createElement(
 				TableHeaderColumn,
-				{ isKey: true, dataSort: true, dataField: 'id' },
+				{ isKey: true, dataSort: true, dataField: 'serial' },
 				'#'
 			),
 			React.createElement(
@@ -19011,7 +19025,7 @@ var MyBootstrapTable = React.createClass({
 			),
 			React.createElement(
 				TableHeaderColumn,
-				{ dataSort: true, dataField: 'report' },
+				{ dataSort: true, dataFormat: linkifyReportFormat, dataField: 'report' },
 				'Report'
 			)
 		);
