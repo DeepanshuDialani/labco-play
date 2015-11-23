@@ -12,7 +12,14 @@ body {
 	width:30%;
 	margin-left: 5%;
 }
-#logo-container {
+#navbar-container {
 	width: 100%;
-	margin-left: 5%;
+}
+.navbar {
+	padding-left: 4%;
+}
+#new-report-btn {
+	margin-right: 5%;
+	color: #fff;
+	border-radius: 3px;
 }
