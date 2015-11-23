@@ -18926,7 +18926,7 @@ module.exports = require('./lib/React');
 },{"./lib/React":25}],158:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ReactBSTable = require("./react-bootstrap-table.min");
+var ReactBSTable = require("./react-bootstrap-table-custom.min");
 var BootstrapTable = ReactBSTable.BootstrapTable;
 var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 var TableDataSet = ReactBSTable.TableDataSet;
@@ -19014,7 +19014,7 @@ var MyBootstrapTable = React.createClass({
 
 ReactDOM.render(React.createElement(MyBootstrapTable, { source: 'https://demo3332037.mockable.io/lab-records' }), document.getElementById("container"));
 
-},{"./react-bootstrap-table.min":159,"react":157,"react-dom":1}],159:[function(require,module,exports){
+},{"./react-bootstrap-table-custom.min":159,"react":157,"react-dom":1}],159:[function(require,module,exports){
 !(function (e, t) {
 	"object" == typeof exports && "object" == typeof module ? module.exports = t(require("react"), require("react-dom")) : "function" == typeof define && define.amd ? define(["react", "react-dom"], t) : "object" == typeof exports ? exports.ReactBootstrapTable = t(require("react"), require("react-dom")) : e.ReactBootstrapTable = t(e.React, e.ReactDOM);
 })(this, function (e, t) {
