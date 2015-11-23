@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ReactBSTable = require("./react-bootstrap-table");  
+var ReactBSTable = require("./react-bootstrap-table-custom.min");
 var BootstrapTable = ReactBSTable.BootstrapTable;
 var TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 var TableDataSet = ReactBSTable.TableDataSet; 

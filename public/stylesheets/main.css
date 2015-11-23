@@ -8,3 +8,7 @@ body {
 	width: 90%;
 	margin: auto;
 }
+#bootstrap-table-search {
+	width:30%;
+	margin-left: 5%;
+}
