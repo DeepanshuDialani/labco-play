@@ -1,0 +1,41 @@
+@(labTests: List[LabTest])
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/new-report.css")">
+<div id="navbar-container">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+   			<div class="navbar-header">
+     				<a id="logo-container" class="navbar-brand" href="#">
+       			<img alt="LabCo" src="@routes.Assets.versioned("images/favicon.png")">
+     			</a>
+   		</div>
+	</nav>
+</div>
+
+<div id="form-container">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<select class="form-control col-sm-2">
+		  		@labTests.map { labTest => 
+		  			<option>@labTest.getName()</option>
+		  		}
+			</select>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" placeholder="Patient Name">
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-10">
+		      <input type="text" class="form-control" placeholder="Patient Id">
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class=" col-sm-10">
+		      <button type="submit" class="btn btn-default">Submit</button>
+		    </div>
+		</div>
+	</form>
+</div>
