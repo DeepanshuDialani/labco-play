@@ -8,5 +8,6 @@ target
 /RUNNING_PID
 .DS_Store
 .cache-main
-.sbtserver/
-/bin/
+.sbtserver
+project/.sbtserver
+.cache-tests
