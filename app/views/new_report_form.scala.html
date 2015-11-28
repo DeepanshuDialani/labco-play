@@ -17,11 +17,20 @@
    		</div>
 	</nav>
 </div>
+
+<!-- progressbar -->
+<ul id="progressbar">
+	<li class="active">Report type</li>
+	<li>Report parameters</li>
+</ul>
+	
+<br>
+	
 <div id="form-container-1" class="form-container">
-	<form class="form-horizontal">
+	<form class="form-horizontal form-wrapper">
 		<div class="np-form form-group">
 			<label for="report-type">Choose report type</label><br>
-			<select id="report-type" class="selectpicker">
+			<select id="report-type" class="selectpicker form-control">
 		  		@labTests.map { labTest => 
 		  			<option>@labTest.getName()</option>
 		  		}
@@ -50,10 +59,10 @@
 	</form>
 </div>
 <div id="form-container-2" class="form-container animated bounceInRight" style="display:none;">
-	<form class="form-horizontal">
+	<form class="form-horizontal form-wrapper">
 		<div class="np-form form-group">
 			<label for="report-type">Foobar</label><br>
-			<select id="report-type" class="selectpicker">
+			<select id="report-type" class="selectpicker form-control">
 		  		@labTests.map { labTest => 
 		  			<option>@labTest.getName()</option>
 		  		}
@@ -79,6 +88,7 @@
 		      	</button>
 		    </div>
 		</div>
+		
 	</form>
 </div>
 <script>
@@ -98,7 +108,10 @@ $(document).ready(function() {
     	 $("#submit-form-1").removeClass('btn btn-success'); 
     	 $("#submit-form-1").addClass('btn btn-warning'); 
     	 $("#submit-form-1").prepend("<span class=\"glyphicon glyphicon-refresh glyphicon-refresh-animate\"></span>");
-    	console.log("Next is clicked");
+    	 $("#progressbar li").eq(1).addClass("active");
+ 		
+    	 console.log("Next is clicked");
     });
+	
 });
 </script>
