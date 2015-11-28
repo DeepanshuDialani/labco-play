@@ -1,5 +1,28 @@
-#form-container {
-	width: 300px;
-	margin-left: 50%;
+#form-container-1, #form-container-2 {
+	width: 20%;
+    margin-left: 40%;
     margin-top: 60px;
+}
+.np-form {
+	padding-right: 0px;
+	padding-left: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.form-horizontal {
+	padding-left: 15px;
+}
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
 }

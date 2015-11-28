@@ -2,6 +2,11 @@
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/new-report.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap-select.min.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/animate.css")">
+<script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
+<script src="@routes.Assets.versioned("javascripts/bootstrap-select.min.js")"></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <div id="navbar-container">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -12,30 +17,82 @@
    		</div>
 	</nav>
 </div>
-
-<div id="form-container">
+<div id="form-container-1" class="form-container">
 	<form class="form-horizontal">
-		<div class="form-group">
-			<select class="form-control col-sm-2">
+		<div class="np-form form-group">
+			<label for="report-type">Choose report type</label><br>
+			<select id="report-type" class="selectpicker">
 		  		@labTests.map { labTest => 
 		  			<option>@labTest.getName()</option>
 		  		}
 			</select>
 		</div>
 		<div class="form-group">
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" placeholder="Patient Name">
+			<div class="np-form col-sm-10">
+				<label for="patient-name">Patient Name</label>
+		      	<input type="text" class="form-control" id="patient-name" >
 		    </div>
 		</div>
 		<div class="form-group">
-			<div class="col-sm-10">
-		      <input type="text" class="form-control" placeholder="Patient Id">
+			<div class="np-form col-sm-10">
+		      	<label for="patient-id">Patient ID</label>
+		      	<input type="text" class="form-control">
 		    </div>
 		</div>
 		<div class="form-group">
-			<div class=" col-sm-10">
-		      <button type="submit" class="btn btn-default">Submit</button>
+			<div class="np-form col-sm-10">
+		      <button id="submit-form-1" type="button" class="btn btn-success">
+		      	Next
+		      	<span class="glyphicon glyphicon-menu-right"></span>
+		      </button>
 		    </div>
 		</div>
 	</form>
 </div>
+<div id="form-container-2" class="form-container" style="display:none;">
+	<form class="form-horizontal">
+		<div class="np-form form-group">
+			<label for="report-type">Choose report type</label><br>
+			<select id="report-type" class="selectpicker">
+		  		@labTests.map { labTest => 
+		  			<option>@labTest.getName()</option>
+		  		}
+			</select>
+		</div>
+		<div class="form-group">
+			<div class="np-form col-sm-10">
+				<label for="patient-name">Patient Name</label>
+		      	<input type="text" class="form-control" id="patient-name" >
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="np-form col-sm-10">
+		      	<label for="patient-id">Patient ID</label>
+		      	<input type="text" class="form-control">
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="np-form col-sm-10">
+		      <button id="submit-form-1" type="button" class="btn btn-success">
+		      	Next
+		      	<span class="glyphicon glyphicon-menu-right"></span>
+		      </button>
+		    </div>
+		</div>
+	</form>
+</div>
+<script>
+$(document).ready(function() {
+	$('#submit-form-1').one('click', function() {
+    	 $('#form-container-1').addClass('animated bounceOutLeft');
+    	 $('#form-container-2').show('animated bounceInRight');
+    	 
+    	 $("#submit-form-1").text(' Saving...'); 
+    	 $("#submit-form-1").blur(); 
+    	 $("#submit-form-1").removeClass('btn btn-success'); 
+    	 $("#submit-form-1").addClass('btn btn-warning'); 
+    	 $("#submit-form-1").prepend("<span class=\"glyphicon glyphicon-refresh glyphicon-refresh-animate\"></span>");
+    	console.log("Next is clicked");
+    });
+});
+</script>
