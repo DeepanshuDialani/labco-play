@@ -10,15 +10,19 @@
 	padding: 20px 50px;
 }
 #form-container-2 {
-	width: 40%;
-	height: 400px;
-    margin-left: 30%;
+	width: 50%;
+	height: 500px;
+    margin-left: 25%;
     margin-top: 15px;
     border: 0 none;
 	border-radius: 3px;
 	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
 	box-sizing: border-box;
 	padding: 20px 30px;
+	overflow: auto;
+}
+#param-input-group {
+	width: 100%;
 }
 .np-form {
 	width: 90%;

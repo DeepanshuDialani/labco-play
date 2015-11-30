@@ -59,8 +59,8 @@ public class Application extends Controller {
     private List<LabTest> getLabTests(String authToken) {
 //    	 TODO: Fetch lab tests from db
     	List<LabTest> labTests = new ArrayList<>();
-    	labTests.add(new LabTest(123, "Blood"));
-    	labTests.add(new LabTest(224, "Dengue"));
+    	labTests.add(new LabTest(345, "Blood"));
+    	labTests.add(new LabTest(346, "Dengue"));
     	return labTests;
     }
 }

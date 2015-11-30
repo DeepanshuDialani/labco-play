@@ -10,5 +10,4 @@ target
 .cache-main
 .sbtserver
 project/.sbtserver
-.cache-main
 .cache-tests
