@@ -1,7 +1,15 @@
-#form-container-1, #form-container-2 {
+#form-container-1 {
 	width: 20%;
     margin-left: 40%;
     margin-top: 60px;
+}
+#form-container-2 {
+	width: 40%;
+    margin-left: 30%;
+    margin-top: 60px;
+}
+#param-input-group {
+	width: 100%;
 }
 .np-form {
 	padding-right: 0px;

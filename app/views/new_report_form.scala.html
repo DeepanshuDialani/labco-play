@@ -23,7 +23,7 @@
 			<label for="report-type">Choose report type</label><br>
 			<select id="report-type" class="selectpicker">
 		  		@labTests.map { labTest => 
-		  			<option>@labTest.getName()</option>
+		  			<option value="@labTest.getId().toString()">@labTest.getName()</option>
 		  		}
 			</select>
 		</div>
@@ -50,41 +50,94 @@
 	</form>
 </div>
 <div id="form-container-2" class="form-container animated bounceInRight" style="display:none;">
-	<form class="form-horizontal">
-		<div class="np-form form-group">
-			<label for="report-type">Foobar</label><br>
-			<select id="report-type" class="selectpicker">
-		  		@labTests.map { labTest => 
-		  			<option>@labTest.getName()</option>
-		  		}
-			</select>
-		</div>
-		<div class="form-group">
-			<div class="np-form col-sm-10">
-				<label for="patient-name">DD Name</label>
-		      	<input type="text" class="form-control" id="patient-name" >
-		    </div>
-		</div>
-		<div class="form-group">
-			<div class="np-form col-sm-10">
-		      	<label for="patient-id">Patient ID</label>
-		      	<input type="text" class="form-control">
-		    </div>
-		</div>
-		<div class="form-group">
-			<div class="np-form col-sm-10">
-		      <button id="submit-form-1" type="button" class="btn btn-danger">
-		      	<span class="glyphicon glyphicon-ok"></span>
-		      	Save
-		      	</button>
-		    </div>
-		</div>
-	</form>
+	
 </div>
 <script>
 function onBounceOutLeftEnd() {
 	$('#form-container-1').hide();
 	$('#form-container-2').show();
+}
+
+function create_col(val) {
+	var col = document.createElement("div");
+	col.setAttribute('class', "col-lg-6");
+	
+	var item = document.createElement("div");
+	item.setAttribute('class', "np-form form-group");
+	
+	var newlabel = document.createElement("Label");
+	newlabel.setAttribute("for",val.param_name);
+	newlabel.innerHTML = val.param_name;
+	item.appendChild(newlabel);
+	
+	var inputgroup = document.createElement("div");
+	inputgroup.setAttribute('class', "input-group");
+	inputgroup.setAttribute('id', "param-input-group");
+	
+	var element = document.createElement("input"); //input element, text
+	element.setAttribute('type',"text");
+	element.setAttribute('name',val.param_name); 
+	element.setAttribute('class', "form-control");
+	inputgroup.appendChild(element);
+	
+	if(val.param_unit != "") {
+		var span = document.createElement("span");
+		span.setAttribute('class', "input-group-addon");
+		span.innerHTML = val.param_unit;
+		inputgroup.appendChild(span);	
+	}
+	
+	item.appendChild(inputgroup);
+	col.appendChild(item);
+	
+	return col;
+}
+
+function create_form(data) {
+	var f = document.createElement("form");
+	f.setAttribute('method',"post");
+	
+	for (i = 0; i < data.length; i+=2) {
+		var row = document.createElement("div");
+		row.setAttribute('class', "row");
+		
+		var col1 = create_col(data[i]);
+		row.appendChild(col1);
+		
+		if (i + 1 < data.length) {
+			var col2 = create_col(data[i + 1]);
+			row.appendChild(col2);
+		}
+		
+		f.appendChild(row);		
+	}
+	
+	var s = document.createElement("input"); //input element, Submit button
+	s.setAttribute('type',"submit");
+	s.setAttribute('value',"Save");
+	
+	f.appendChild(s);
+	
+	$("#form-container-2").append(f);
+}
+
+function fetchParametersForTestId(testId) {
+	$.ajax({
+	      url: "https://demo3332037.mockable.io/lab-tests/" + testId + "/parameters",
+	      dataType: 'json',
+	      cache: false,
+	      success: function(data) {
+	    	  console.log("onSuccess while fetching parameters, data: " + JSON.stringify(data));
+	    	  create_form(data);
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error("onError while fetching parameters", status, err.toString());
+	      }.bind(this)
+	    });
+}
+
+function getSelectedTestId() {
+	return $("#report-type").val();
 }
 
 $(document).ready(function() {
@@ -99,6 +152,8 @@ $(document).ready(function() {
     	 $("#submit-form-1").addClass('btn btn-warning'); 
     	 $("#submit-form-1").prepend("<span class=\"glyphicon glyphicon-refresh glyphicon-refresh-animate\"></span>");
     	console.log("Next is clicked");
+    	var selectedTestId = getSelectedTestId();
+		fetchParametersForTestId(selectedTestId);
     });
 });
 </script>
