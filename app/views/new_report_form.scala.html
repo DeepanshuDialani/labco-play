@@ -20,8 +20,9 @@
 
 <!-- progressbar -->
 <ul id="progressbar">
-	<li class="active">Report type</li>
-	<li>Report parameters</li>
+	<li class="active"><button class="progress-state" id="progress-state-report-type">Report type</button></li>
+	<li><button class="progress-state" id="progress-state-report-params">Report parameters</button></li>
+	<li><button class="progress-state" id="progress-state-done">Done</button></li>
 </ul>
 	
 <br>
@@ -50,7 +51,7 @@
 		</div>
 		<div class="form-group">
 			<div class="np-form col-sm-10">
-		      <button id="submit-form-1" type="button" class="btn btn-success">
+		      <button value="0" id="submit-form-1" type="button" class="btn btn-success">
 		      	Next
 		      	<span class="glyphicon glyphicon-menu-right"></span>
 		      </button>
@@ -58,13 +59,10 @@
 		</div>
 	</form>
 </div>
-<div id="form-container-2" class="form-container animated bounceInRight" style="display:none;">
+<div id="form-container-2" class="form-container" style="display:none;">
 </div>
 <script>
-function onBounceOutLeftEnd() {
-	$('#form-container-1').hide();
-	$('#form-container-2').show();
-}
+var maxProgressPosition = 0;
 
 function create_col(val) {
 	var col = document.createElement("div");
@@ -148,26 +146,81 @@ function getSelectedTestId() {
 	return $("#report-type").val();
 }
 
+function showSavingButton() {
+	$('#submit-form-1').val("1");
+	$("#submit-form-1").text(' Saving...'); 
+	$("#submit-form-1").blur(); 
+	$("#submit-form-1").removeClass('btn btn-success'); 
+	$("#submit-form-1").addClass('btn btn-warning'); 
+	$("#submit-form-1").prepend("<span class=\"glyphicon glyphicon-refresh glyphicon-refresh-animate\"></span>");
+}
+
+function showNextButton() {
+	$('#submit-form-1').val("0");
+	$("#submit-form-1").text('Next'); 
+	$("#submit-form-1").removeClass('btn btn-warning'); 
+	$("#submit-form-1").addClass('btn btn-success'); 
+	$("#submit-form-1").append("<span class=\"glyphicon glyphicon-menu-right\"></span>");
+}
+
+function setActiveProgressOn(position) {
+	$("#progressbar li").each(function(index) {
+		if(index > position && $("#progressbar li").eq(index).hasClass("active")) {
+			$("#progressbar li").eq(index).removeClass("active");
+		}
+	});
+	$("#progressbar li").eq(position).addClass("active");
+}
+
 $(document).ready(function() {
-	$('#form-container-1').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', onBounceOutLeftEnd);
+	$('#form-container-1').on('mozAnimationEnd MSAnimationEnd oanimationend animationend', function(event) {
+		if($('#submit-form-1').val() != "0") {
+			$('#form-container-1').hide();
+			$('#form-container-2').show();
+		}
+	});
 	
-	$('#submit-form-1').one('click', function() {
-		console.log("Next is clicked");
-    	
-		$('#form-container-1').addClass('animated bounceOutLeft');
-    	 
-    	 $("#submit-form-1").text(' Saving...'); 
-    	 $("#submit-form-1").blur(); 
-    	 $("#submit-form-1").removeClass('btn btn-success'); 
-    	 $("#submit-form-1").addClass('btn btn-warning'); 
-    	 $("#submit-form-1").prepend("<span class=\"glyphicon glyphicon-refresh glyphicon-refresh-animate\"></span>");
-    	$("#progressbar li").eq(1).addClass("active");
-    	
-    	var selectedTestId = getSelectedTestId();
-		fetchParametersForTestId(selectedTestId);
-    	
- 		
+	$('#submit-form-1').on('click', function() {
+		if($(this).val() == "0") {
+			console.log("Next is clicked");
+			$('#form-container-1').addClass('animated bounceOutLeft');
+	    	 
+			showSavingButton();
+	    	
+			maxProgressPosition = 1;
+			setActiveProgressOn(maxProgressPosition);
+
+			$("#form-container-2").empty();
+	    	$('#form-container-2').addClass('animated bounceInRight');
+	    	var selectedTestId = getSelectedTestId();
+			fetchParametersForTestId(selectedTestId);
+		}
     });
 	
+	$("#progress-state-report-type").click(function(){
+		setActiveProgressOn(0);
+    	showNextButton();
+		$('#form-container-2').removeClass('animated bounceInRight');
+		$('#form-container-1').removeClass('animated bounceOutLeft');
+		$('#form-container-2').hide();
+		$('#form-container-1').addClass('animated bounceInLeft');
+		$('#form-container-1').show();
+	});
+	
+	$("#progress-state-report-params").click(function(){
+		if(maxProgressPosition >= 1) {
+			setActiveProgressOn(1);
+	    	$('#form-container-1').removeClass('animated bounceInLeft');
+			$('#form-container-1').hide();
+			$('#form-container-2').addClass('animated bounceInRight');
+			$('#form-container-2').show();	
+		}
+	});
+	
+	$("#progress-state-done").click(function(){
+		if(maxProgressPosition >=2) {
+			setActiveProgressOn(2);
+		}
+	});
 });
 </script>

@@ -11,9 +11,9 @@
 }
 #form-container-2 {
 	width: 50%;
-	height: 500px;
     margin-left: 25%;
     margin-top: 15px;
+    margin-bottom: 30px;
     border: 0 none;
 	border-radius: 3px;
 	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
@@ -52,11 +52,18 @@
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
 }
-
+.progress-state {
+    background-color: transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
 #progressbar {
 	width: 40%;
 	margin-top: 30px;
-	margin-left: 34%;
+	margin-left: 29%;
 	overflow: hidden;
 	counter-reset: step;
 }
