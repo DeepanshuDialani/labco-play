@@ -101,7 +101,6 @@ function create_col(val) {
 
 function create_form(data) {
 	var f = document.createElement("form");
-	f.setAttribute('method',"post");
 	
 	for (i = 0; i < data.length; i+=2) {
 		var row = document.createElement("div");
@@ -118,11 +117,15 @@ function create_form(data) {
 		f.appendChild(row);		
 	}
 	
-	var s = document.createElement("input"); //input element, Submit button
-	s.setAttribute('type',"submit");
-	s.setAttribute('value',"Save");
+	var saveButton = document.createElement("button"); //input element, Submit button
+	saveButton.setAttribute('type',"button");
+	saveButton.setAttribute('class',"btn btn-danger");	
+	var span = document.createElement("span");
+	span.setAttribute('class', "glyphicon glyphicon-ok");
+	span.innerHTML = "Save";
+	saveButton.appendChild(span);
 	
-	f.appendChild(s);
+	f.appendChild(saveButton);
 	
 	$("#form-container-2").append(f);
 }
