@@ -46,7 +46,7 @@
 		<div class="form-group">
 			<div class="np-form col-sm-10">
 		      	<label for="patient-id">Patient ID</label>
-		      	<input type="text" class="form-control">
+		      	<input type="text" class="form-control" id="patient-id">
 		    </div>
 		</div>
 		<div class="form-group">
@@ -60,6 +60,9 @@
 	</form>
 </div>
 <div id="form-container-2" class="form-container" style="display:none;">
+</div>
+<div id="form-container-3" class="form-container" style="display:none;">
+	Report has been submitted. 
 </div>
 <script>
 var maxProgressPosition = 0;
@@ -78,12 +81,14 @@ function create_col(val) {
 	
 	var inputgroup = document.createElement("div");
 	inputgroup.setAttribute('class', "input-group");
-	inputgroup.setAttribute('id', "param-input-group");
+	inputgroup.setAttribute('id', "param-input-group-" + val.param_id);
+	inputgroup.setAttribute('value', val.param_id);
 	
 	var element = document.createElement("input"); //input element, text
 	element.setAttribute('type',"text");
 	element.setAttribute('name',val.param_name); 
 	element.setAttribute('class', "form-control");
+	element.setAttribute('id', val.param_id);
 	inputgroup.appendChild(element);
 	
 	if(val.param_unit != "") {
@@ -99,7 +104,7 @@ function create_col(val) {
 	return col;
 }
 
-function create_form(data) {
+function createParametersForm(data) {
 	var f = document.createElement("form");
 	
 	for (i = 0; i < data.length; i+=2) {
@@ -120,14 +125,24 @@ function create_form(data) {
 	var saveButton = document.createElement("button"); //input element, Submit button
 	saveButton.setAttribute('type',"button");
 	saveButton.setAttribute('class',"btn btn-danger");	
+	saveButton.setAttribute('id','submit-form-2');
+	saveButton.setAttribute('value', "0");
+	
 	var span = document.createElement("span");
 	span.setAttribute('class', "glyphicon glyphicon-ok");
-	span.innerHTML = "Save";
+	saveButton.innerHTML = "Save ";
 	saveButton.appendChild(span);
-	
+
 	f.appendChild(saveButton);
 	
 	$("#form-container-2").append(f);
+	
+	$('#submit-form-2').one('click', function() {
+		console.log("Creating report & posting it");
+		reportData = createReportData();
+		postReport(reportData);
+		showSavingButton("submit-form-2");
+    });
 }
 
 function fetchParametersForTestId(testId) {
@@ -137,7 +152,7 @@ function fetchParametersForTestId(testId) {
 	      cache: false,
 	      success: function(data) {
 	    	  console.log("onSuccess while fetching parameters, data: " + JSON.stringify(data));
-	    	  create_form(data);
+	    	  createParametersForm(data);
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	        console.error("onError while fetching parameters", status, err.toString());
@@ -145,17 +160,63 @@ function fetchParametersForTestId(testId) {
 	    });
 }
 
+function postReport(reportData) {
+	$.ajax({
+	      url: "https://demo3332037.mockable.io/create-report",
+	      method: "POST",
+	      dataType: 'json',
+	      cache: false,
+	      data: reportData,
+	      success: function(data) {
+				showSavedButton();
+				console.log("onSuccess while posting report, data: " + JSON.stringify(data));
+				setInterval(function(){
+					$('#form-container-2').addClass('animated bounceOutLeft');
+		    	   	 
+					maxProgressPosition = 2;
+					setActiveProgressOn(maxProgressPosition);
+
+			      	$('#form-container-3').addClass('animated bounceInRight');
+				}, 1000);
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error("onError while posting report", status, err.toString());
+	      }.bind(this)
+	    });
+}
+
+function createReportData() {
+	var json = {};
+	json["patient_name"] = $("#patient-name").val();
+	json["patient_id"] = $("#patient-id").val();
+	json["test_id"] = getSelectedTestId();
+	parameters = {};
+	$("[id^=param-input-group]").each(function(index, element){
+		id = element.getElementsByTagName('input')[0].id;
+		param_id = id.replace("param-input-","");
+		parameters[param_id] = $("#" + id).val();
+	});
+	json["parameters"] = parameters;
+	console.log(JSON.stringify(json));
+}
+
 function getSelectedTestId() {
 	return $("#report-type").val();
 }
 
-function showSavingButton() {
-	$('#submit-form-1').val("1");
-	$("#submit-form-1").text(' Saving...'); 
-	$("#submit-form-1").blur(); 
-	$("#submit-form-1").removeClass('btn btn-success'); 
-	$("#submit-form-1").addClass('btn btn-warning'); 
-	$("#submit-form-1").prepend("<span class=\"glyphicon glyphicon-refresh glyphicon-refresh-animate\"></span>");
+function showSavingButton(buttonId) {
+	id = "#" + buttonId;
+	$(id).val("1");
+	$(id).text(' Saving...'); 
+	$(id).blur();
+	if($(id).hasClass('btn btn-success')) {
+		$(id).removeClass('btn btn-success'); 
+	}
+	if($(id).hasClass('btn btn-danger')) {
+		$(id).removeClass('btn btn-danger'); 
+	}
+	$(id).addClass('btn btn-warning'); 
+	$(id).prepend("<span class=\"glyphicon glyphicon-refresh glyphicon-refresh-animate\"></span>");
 }
 
 function showNextButton() {
@@ -164,6 +225,13 @@ function showNextButton() {
 	$("#submit-form-1").removeClass('btn btn-warning'); 
 	$("#submit-form-1").addClass('btn btn-success'); 
 	$("#submit-form-1").append("<span class=\"glyphicon glyphicon-menu-right\"></span>");
+}
+
+function showSavedButton() {
+	$("#submit-form-2").text('Saved '); 
+	$("#submit-form-2").removeClass('btn btn-warning'); 
+	$("#submit-form-2").addClass('btn btn-success'); 
+	$("#submit-form-2").append("<span class=\"glyphicon glyphicon-saved\"></span>");
 }
 
 function setActiveProgressOn(position) {
@@ -183,12 +251,19 @@ $(document).ready(function() {
 		}
 	});
 	
+	$('#form-container-2').on('mozAnimationEnd MSAnimationEnd oanimationend animationend', function(event) {
+		if($('#submit-form-2').val() != "0") {
+			$('#form-container-2').hide();
+			$('#form-container-3').show();
+		}
+	});
+	
 	$('#submit-form-1').on('click', function() {
 		if($(this).val() == "0") {
 			console.log("Next is clicked");
 			$('#form-container-1').addClass('animated bounceOutLeft');
 	    	 
-			showSavingButton();
+			showSavingButton("submit-form-1");
 	    	
 			maxProgressPosition = 1;
 			setActiveProgressOn(maxProgressPosition);
@@ -201,17 +276,19 @@ $(document).ready(function() {
     });
 	
 	$("#progress-state-report-type").click(function(){
-		setActiveProgressOn(0);
-    	showNextButton();
-		$('#form-container-2').removeClass('animated bounceInRight');
-		$('#form-container-1').removeClass('animated bounceOutLeft');
-		$('#form-container-2').hide();
-		$('#form-container-1').addClass('animated bounceInLeft');
-		$('#form-container-1').show();
+		if(maxProgressPosition != 2) {
+			setActiveProgressOn(0);
+	    	showNextButton();
+			$('#form-container-2').removeClass('animated bounceInRight');
+			$('#form-container-1').removeClass('animated bounceOutLeft');
+			$('#form-container-2').hide();
+			$('#form-container-1').addClass('animated bounceInLeft');
+			$('#form-container-1').show();
+		}
 	});
 	
 	$("#progress-state-report-params").click(function(){
-		if(maxProgressPosition >= 1) {
+		if(maxProgressPosition == 1) {
 			setActiveProgressOn(1);
 	    	$('#form-container-1').removeClass('animated bounceInLeft');
 			$('#form-container-1').hide();
