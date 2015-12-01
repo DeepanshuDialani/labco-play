@@ -80,7 +80,7 @@ function create_col(val) {
 	item.appendChild(newlabel);
 	
 	var inputgroup = document.createElement("div");
-	inputgroup.setAttribute('class', "input-group");
+	inputgroup.setAttribute('class', "input-group param-input");
 	inputgroup.setAttribute('id', "param-input-group-" + val.param_id);
 	inputgroup.setAttribute('value', val.param_id);
 	
@@ -245,14 +245,14 @@ function setActiveProgressOn(position) {
 
 $(document).ready(function() {
 	$('#form-container-1').on('mozAnimationEnd MSAnimationEnd oanimationend animationend', function(event) {
-		if($('#submit-form-1').val() != "0") {
+		if($('#submit-form-1').val() == "1") {
 			$('#form-container-1').hide();
 			$('#form-container-2').show();
 		}
 	});
 	
 	$('#form-container-2').on('mozAnimationEnd MSAnimationEnd oanimationend animationend', function(event) {
-		if($('#submit-form-2').val() != "0") {
+		if($('#submit-form-2').val() == "1") {
 			$('#form-container-2').hide();
 			$('#form-container-3').show();
 		}

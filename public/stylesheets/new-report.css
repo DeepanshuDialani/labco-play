@@ -21,7 +21,7 @@
 	padding: 20px 30px;
 	overflow: auto;
 }
-#param-input-group {
+.param-input {
 	width: 100%;
 }
 .np-form {
