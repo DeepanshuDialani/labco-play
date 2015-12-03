@@ -1,14 +1,9 @@
-<div id="navbar-container">
-<nav class="navbar navbar-default">
-	<div class="container-fluid">
-  			<div class="navbar-header">
-    				<a id="logo-container" class="navbar-brand" href="#">
-      			<img alt="LabCo" src="@routes.Assets.versioned("images/favicon.png")">
-    			</a>
-  		</div>
-</nav>
-</div>
-<div id="form-container">
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/login-page.css")">
+
+<h1 id="elixr-main-logo">Elixr</h1>
+<h4 id="subtext">A smarter way to manage your lab's health records</h4>
+
+<div class="form-container" id="login-form-container">
 	<form action="/login" method="post">
 	<div class="form-group">
 	    <div class="col-sm-3">
@@ -21,8 +16,8 @@
 	    </div>
 	</div>
 	<div class="form-group">
-		<div class=" col-sm-3">
-	      	<button type="submit" value="submit" class="btn btn-default">Submit</button>
+		<div class="col-sm-3">
+	      	<button type="submit" value="submit" class="btn btn-info">Login</button>
 	    </div>
 	</div>
 	 </form>

@@ -1,4 +1,6 @@
+
 #form-container-1 {
+	background-color: white;
 	width: 30%;
 	height: 300px;
     margin-left: 35%;
@@ -10,6 +12,7 @@
 	padding: 20px 50px;
 }
 #form-container-2 {
+	background-color: white;
 	width: 50%;
     margin-left: 25%;
     margin-top: 15px;
@@ -20,6 +23,19 @@
 	box-sizing: border-box;
 	padding: 20px 30px;
 	overflow: auto;
+}
+#form-container-3 {
+	background-color: white;
+	width: 30%;
+	height: 300px;
+    margin-left: 35%;
+    margin-top: 15px;
+    border: 0 none;
+	border-radius: 3px;
+	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+	box-sizing: border-box;
+	padding: 20px 50px;
+	text-align: center;
 }
 .param-input {
 	width: 100%;
@@ -34,6 +50,17 @@
 .form-wrapper {
 	height: 100%;
 	overflow: auto;
+}
+#create-new-report-btn {
+	margin-top: 40px;
+}
+#go-back-btn {
+	margin-top: 30px;
+}
+#report-submit-text {
+	font-weight: bold;
+	font-size: medium;
+	text-align: center;
 }
 .form-horizontal {
 	padding-left: 15px;

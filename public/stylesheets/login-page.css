@@ -1,0 +1,14 @@
+#elixr-main-logo {
+	font-family: 'Lobster', cursive;
+	color: white;
+	font-size: 200px;
+	margin-left: 5%;
+}
+#login-form-container {
+	margin-left: 4%;
+	margin-top: 10%;
+}
+#subtext {
+	color: white;
+	margin-left: 6%;
+}

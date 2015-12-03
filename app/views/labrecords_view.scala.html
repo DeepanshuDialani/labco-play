@@ -1,16 +1,30 @@
-	<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/react-bootstrap-table-all.min.css")">
-	<div id="navbar-container">
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-   			<div class="navbar-header">
-     				<a id="logo-container" class="navbar-brand" href="#">
-       			<img alt="LabCo" src="@routes.Assets.versioned("images/favicon.png")">
-     			</a>
-   		</div>
-		<p><a id="new-report-btn" class="btn navbar-text navbar-right btn-primary btn-default" href="/new-report" role="button">New Report</a></p>
-	</nav>
+	<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/react-bootstrap-table-all.min.css")">
+	<div id="navbar-container" style="background-image: url('@routes.Assets.versioned("images/dark_embroidery.png")');">
+		<nav class="navbar">
+			<div class="container-fluid">
+    			<div class="navbar-header">
+					<a id="elixr-logo" class="navbar-brand" href="/">Elixr</a>
+					
+				</div>
+				<ul id="right-container" class="nav navbar-nav navbar-right">
+						<li>
+							<p>
+								<a id="new-report-btn" class="btn navbar-text navbar-right btn-primary btn-default" href="/new-report" role="button">
+								<i id="logout-img" class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+								New Report
+								</a>
+							</p>
+						</li>
+						<li>
+							<a id="logout-btn" role="button" class="btn btn-default btn-lg" href="/logout">
+  								<i id="logout-img" class="glyphicon glyphicon-off" aria-hidden="true"></i>
+							</a>
+						</li>
+					</ul>
+			</div>
+		</nav>
 	</div>
+	
 	<div id="container">
 	</div>
 	<script src="@routes.Assets.versioned("javascripts/bundle.js")"  type="text/javascript"></script>

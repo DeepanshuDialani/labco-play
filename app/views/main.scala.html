@@ -1,15 +1,17 @@
-@(title: String)(content: Html)
+@(url: play.api.mvc.Call)(content: Html)
 
 <!DOCTYPE html>
 
 <html lang="en">
     <head>
-        <title>@title</title>
+        <title>Elixr</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
     	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    	<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    	<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
     </head>
-    <body>
+    <body style="background-image: url('@url');">
         @content
     </body>
 </html>

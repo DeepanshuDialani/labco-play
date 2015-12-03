@@ -32,10 +32,10 @@ public class Application extends Controller {
 			// TODO: session valid authToken
 			String authToken = "sampleAuth";
 			session(Constants.AUTH_TOKEN_KEY, authToken);
-			return ok(labrecords.render());
+			return redirect("/");
 		}
 		else {
-			return unauthorized("Easy bro!");
+			return unauthorized("Password & username don't match");
 		}
 	}
 
@@ -43,12 +43,12 @@ public class Application extends Controller {
 		String inputEmail = loginFormData.get(Constants.EMAIL_LOGIN_KEY)[0];
 		String inputPassword = loginFormData.get(Constants.PASSWORD_LOGIN_KEY)[0];
 		// TODO: Validate from db
-		return inputEmail.equals("admin@labco.com") && inputPassword.equals("admin");
+		return inputEmail.equals("kem@elixr.co") && inputPassword.equals("kem");
 	}
     
 	public Result logout() {
 	    session().remove(Constants.AUTH_TOKEN_KEY);
-	    return ok("Bye");
+	    return redirect("/");
 	}
 
     public Result newReport() {

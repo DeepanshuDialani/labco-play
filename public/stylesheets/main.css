@@ -4,22 +4,51 @@
 body {
 	width: 100%;
 }
+.navbar {
+	border: none;
+}
 .react-bs-table-container {
-	width: 90%;
+	width: 80%;
 	margin: auto;
+	background-color: white;
+	border: 0 none;
+	border-radius: 3px;
+	box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.4);
+	box-sizing: border-box;
 }
 #bootstrap-table-search {
-	width:30%;
-	margin-left: 5%;
+	width:20%;
+	border: 0 none;
+	border-radius: 3px;
+	margin-left: 10%;
 }
-#navbar-container {
-	width: 100%;
+#elixr-logo {
+	font-family: 'Lobster', cursive;
+	color: white;
+	font-size: xx-large;
+	margin-left: 110px;
 }
-.navbar {
-	padding-left: 4%;
+#logout-img {
+	color: white;
 }
+#logout-btn {
+	background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    margin-top: 15%;
+}
+#right-container {
+	margin-right: 8%;
+}
+.container-fluid {
+	padding-left: 0px;	
+}
+
 #new-report-btn {
-	margin-right: 5%;
+	margin-right: 10%;
 	color: #fff;
 	border-radius: 3px;
 }

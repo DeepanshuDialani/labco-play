@@ -1,5 +1,5 @@
 @(labTests: List[LabTest])
 
-@main("LabCo") { 
+@main(routes.Assets.versioned("images/pixel_weave.png")) { 
 	@new_report_form(labTests)
 }

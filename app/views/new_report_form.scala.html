@@ -1,21 +1,20 @@
 @(labTests: List[LabTest])
 
-<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/new-report.css")">
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap-select.min.css")">
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/animate.css")">
 <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
 <script src="@routes.Assets.versioned("javascripts/bootstrap-select.min.js")"></script>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<div id="navbar-container">
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-   			<div class="navbar-header">
-     				<a id="logo-container" class="navbar-brand" href="#">
-       			<img alt="LabCo" src="@routes.Assets.versioned("images/favicon.png")">
-     			</a>
-   		</div>
-	</nav>
+<div id="navbar-container" style="background-image: url('@routes.Assets.versioned("images/dark_embroidery.png")');">
+		<nav class="navbar">
+			<div class="container-fluid">
+    			<div class="navbar-header">
+					<a id="elixr-logo" class="navbar-brand" href="/">Elixr</a>
+				</div>
+			</div>
+		</nav>
+	</div>
 </div>
 
 <!-- progressbar -->
@@ -62,7 +61,18 @@
 <div id="form-container-2" class="form-container" style="display:none;">
 </div>
 <div id="form-container-3" class="form-container" style="display:none;">
-	Report has been submitted. 
+	<p id="report-submit-text">Your report has been submitted.</p>
+	<a id="create-new-report-btn" role="button" class="btn btn-primary" href="/new-report">
+		CREATE NEW REPORT
+	</a>
+	<div style="height: 1px; background-color: black; text-align: center; margin-top: 30px">
+  		<span style="background-color: white; position: relative; top: -0.7em; padding-left:10px; padding-right: 10px;">
+    	OR
+  		</span>
+	</div>
+	<a id="go-back-btn" role="button" class="btn btn-info" href="/">
+		GO BACK
+	</a>
 </div>
 <script>
 var maxProgressPosition = 0;
@@ -177,7 +187,7 @@ function postReport(reportData) {
 					setActiveProgressOn(maxProgressPosition);
 
 			      	$('#form-container-3').addClass('animated bounceInRight');
-				}, 1000);
+				}, 500);
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	        console.error("onError while posting report", status, err.toString());

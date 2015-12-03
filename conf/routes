@@ -11,4 +11,6 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 POST     /login                     controllers.Application.login()
 
+GET		/logout						controllers.Application.logout()
+
 GET     /new-report                 controllers.Application.newReport()
