@@ -63,4 +63,8 @@ public class Application extends Controller {
     	labTests.add(new LabTest(346, "Dengue"));
     	return labTests;
     }
+    
+    public Result analytics() {
+    	return ok(analytics.render());
+    }
 }

@@ -1,0 +1,118 @@
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/analytics.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap-select.min.css")">
+<script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
+<script src="@routes.Assets.versioned("javascripts/bootstrap-select.min.js")"></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="@routes.Assets.versioned("javascripts/Chart.min.js")"></script>
+
+<div id="navbar-container" style="background-image: url('@routes.Assets.versioned("images/dark_embroidery.png")');">
+		<nav class="navbar">
+			<div class="container-fluid">
+    			<div class="navbar-header">
+					<a id="elixr-logo" class="navbar-brand" href="/">Elixr</a>
+				</div>
+			</div>
+		</nav>
+	</div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <span style="font-weight: 900;">#1</span> Total number of patients in the platelet count range
+  </div>
+</div>
+
+<div class="chart">
+	<div><canvas id="canvas1" class="canvas" ></canvas></div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <span style="font-weight: 900;">#2</span> Total number of patients in each month
+  </div>
+</div>
+
+<div class="chart">
+	<div><canvas id="canvas2" class="canvas"></canvas></div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <span style="font-weight: 900;">#3</span> Total number of patients for each test
+  </div>
+</div>
+
+<div id="chart3" class="chart">
+	<div><canvas id="canvas3" class="canvas"></canvas></div>
+</div>
+
+<script>
+	var chartOptions1 = {
+		    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+		    responsive : true,
+		    scaleLineColor: "white",
+		    scaleFontColor: "white"
+	};
+	var chartOptions2 = {
+		    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+		    responsive : true,
+		    scaleLineColor: "white",
+		    scaleFontColor: "white"
+	};
+	var chartOptions3 = {
+		    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+		    responsive : true,
+		    scaleLineColor: "white",
+		    scaleFontColor: "white",
+		    segmentStrokeColor : "transparent",
+	};
+	var chart1 = {
+		labels : ["0-50K","50K-100K","100K-150K","150K-200K","200K-250K","250K-300K","300K-350K","350K-400K",">400K"],
+		datasets : [
+			{
+				fillColor : "rgba(151,187,205,0.5)",
+				strokeColor : "rgba(151,187,205,0.8)",
+				highlightFill : "rgba(151,187,205,0.75)",
+				highlightStroke : "rgba(151,187,205,1)",
+				data : [23,34,40,62,56,11,35,22,33]
+			}
+		]
+	}
+	var chart2 = {
+			labels : ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+			datasets : [
+				{
+					label: "My Second dataset",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [189,243,246,342,208,399,404,803,543,432,789,345]
+				}
+			]
+		}
+	var chart3 = [
+	    				{
+	    					value: 300,
+	    					color:"rgba(130, 40, 40, 0.8)",
+	    					highlight: "rgba(198,49,49, 0.8)",
+	    					label: "Blood"
+	    				},
+	    				{
+	    					value: 50,
+	    					color: "rgba(49,118,158,0.8)",
+	    					highlight: "rgba(75,178,237,0.8)",
+	    					label: "Dengue"
+	    				}
+	    			];
+	window.onload = function(){
+		var ctx1 = document.getElementById("canvas1").getContext("2d");
+		window.myBar = new Chart(ctx1).Bar(chart1, chartOptions1);
+		var ctx2 = document.getElementById("canvas2").getContext("2d");
+		window.myLine = new Chart(ctx2).Line(chart2, chartOptions2);
+		var ctx3 = document.getElementById("canvas3").getContext("2d");
+		window.myDoughnut = new Chart(ctx3).Doughnut(chart3, chartOptions3);
+	}
+</script>

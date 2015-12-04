@@ -14,3 +14,5 @@ POST     /login                     controllers.Application.login()
 GET		/logout						controllers.Application.logout()
 
 GET     /new-report                 controllers.Application.newReport()
+
+GET 	/analytics					controllers.Application.analytics()
