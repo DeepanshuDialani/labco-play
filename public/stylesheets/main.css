@@ -47,8 +47,20 @@ body {
 	padding-left: 0px;	
 }
 
-#new-report-btn {
-	margin-right: 10%;
-	color: #fff;
-	border-radius: 3px;
+#add-report-btn {
+	margin-right: 8%;
+	color: white;
+}
+#analytics-btn {
+	margin-right: 8%;
+	color: white;
+}
+#add-report-btn:hover {
+	color: #5bc0de;
+}
+#analytics-btn:hover {
+	color: #5bc0de;
+}
+#logout-img:hover {
+	color: #5bc0de;
 }
