@@ -1,11 +1,14 @@
+@(labTests: List[LabTest])
+
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/analytics.css")">
-<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap-select.min.css")">
 <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
-<script src="@routes.Assets.versioned("javascripts/bootstrap-select.min.js")"></script>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="@routes.Assets.versioned("javascripts/Chart.min.js")"></script>
+<script src="@routes.Assets.versioned("javascripts/react.js")"></script>
+<script src="@routes.Assets.versioned("javascripts/react-dom.js")"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
 
-<div id="navbar-container" style="background-image: url('@routes.Assets.versioned("images/dark_embroidery.png")');">
+<div id="navbar-container">
 		<nav class="navbar">
 			<div class="container-fluid">
     			<div class="navbar-header">
@@ -16,103 +19,327 @@
 	</div>
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    <span style="font-weight: 900;">#1</span> Total number of patients in the platelet count range
-  </div>
+<div id="parent-container">
+	<div id="left-container">
+		<p id="dashboard-text">DASHBOARD</p>
+		<ul id="vertical-nav" class="nav nav-pills nav-stacked">
+			<li id="li-patients" class="active"><a id="patients-btn" class="nav-list-text" role="button">Patients</a></li>
+			<li id="li-tests" ><a id="tests-btn" class="nav-list-text" role="button">Tests</a></li>
+			<li id="li-test-values" ><a id="test-values-btn" class="nav-list-text" role="button">Test Values</a></li>
+		</ul>
+	</div>
+	
+	<div id="chart-container">
+
+		<div class="panel panel-default">
+		  <div id="panel-body-container" class="panel-body">
+		  </div>
+		</div>
+		
+		<div class="chart">
+			<img id="loading-chart" src="@routes.Assets.versioned("images/loading_gears.svg")"></img>
+			<div><canvas id="canvas" class="canvas" ></canvas></div>
+		</div>
+	</div>
 </div>
 
-<div class="chart">
-	<div><canvas id="canvas1" class="canvas" ></canvas></div>
-</div>
+<script type="text/babel">
+	
+	var SpanText = React.createClass({
+		render: function() {
+			return (<span className="spanned-panel-text">{this.props.text}</span>);
+		}
+	});
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    <span style="font-weight: 900;">#2</span> Total number of patients in each month
-  </div>
-</div>
+	var ListItem = React.createClass({
+  		render: function() {
+    		return <li id={this.props.id}><a>{this.props.name}</a></li>;
+  		}
+	});
 
-<div class="chart">
-	<div><canvas id="canvas2" class="canvas"></canvas></div>
-</div>
+	var DropdownSpanText = React.createClass({
+		render: function() {
+				var selectedTextId = this.props.id + "-selected-text";
+				var dropdownMenuId = this.props.id + "-ul";
+				return (
+				<div className="dropdown test-parameters-dropdown">
+					<button className="btn dropdown-toggle" type="button" id={this.props.id} data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			    	<span id={selectedTextId}>{this.props.firstElement}</span>
+			    	<span className="caret white"></span>
+			  		</button>
+			  		<ul id={dropdownMenuId} className="dropdown-menu" aria-labelledby={this.props.id}>
+						{this.props.data.map(function(result) {
+           					return <ListItem name={result.name} id={result.id} />;
+        				})}
+					</ul>
+				</div>);
+		}
+	});
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    <span style="font-weight: 900;">#3</span> Total number of patients for each test
-  </div>
-</div>
+	var TextPanelController = React.createClass({
+  		render: function() {
+			if(this.props.source == "patients-btn") {
+				return <SpanText text="Total number of patients in each month" />;
+			}
+			else if(this.props.source == "tests-btn") {
+				return <SpanText text="Breakdown of tests conducted for all patients" />;
+			}
+			else if(this.props.source == "test-values-btn") {
+				var d1 = this.props.data1;
+				var d2 = this.props.data2;
+				return (<div>
+					<SpanText text="Total number of patients v/s" />
+					<DropdownSpanText id="dropdownMenu1" firstElement={d1[0].name} data={d1} />
+					<SpanText text="value in" />
+					<DropdownSpanText id="dropdownMenu2" firstElement={d2[0].name} data={d2} />
+					<SpanText text="test" />
+					</div>);
+			}
+  		}
+	});
 
-<div id="chart3" class="chart">
-	<div><canvas id="canvas3" class="canvas"></canvas></div>
-</div>
+	function renderTextPanel(btnSource, dropdownData1, dropdownData2) {
+		ReactDOM.render(<TextPanelController source={btnSource} data1={dropdownData1} data2={dropdownData2} />, document.getElementById("panel-body-container"));
+	}
+
+	$("#patients-btn").click(function() {
+		loadPatientsChart();
+		removeAllActiveNavStates();
+		$("#li-patients").addClass("active");
+		renderTextPanel("patients-btn", null, null);
+	});
+	
+	$("#tests-btn").click(function() {
+		loadTestsChart();
+		removeAllActiveNavStates();
+		$("#li-tests").addClass("active");
+		renderTextPanel("tests-btn", null, null);
+	});
+		
+	function handleTextPanelDropdownClicks() {
+		$("#dropdownMenu1-ul").on("click", "li", function(event){
+			console.log("lastSelectedTestParamId = " + lastSelectedTestParamId + ", lastSelectedTestId: " + lastSelectedTestId);
+			var selectedId = $(this).attr("id");
+			if(selectedId != lastSelectedTestParamId) {
+				$("#dropdownMenu1-selected-text").text($(this).text());
+				lastSelectedTestParamId = selectedId;
+				loadTestValuesChart(lastSelectedTestId, selectedId);
+			}
+			console.log("id = " + selectedId);
+		});	
+		$("#dropdownMenu2-ul").on("click", "li", function(event){
+			console.log("lastSelectedTestParamId = " + lastSelectedTestParamId + ", lastSelectedTestId: " + lastSelectedTestId);
+			var selectedId = $(this).attr("id");
+			if(selectedId != lastSelectedTestId) {
+				$("#dropdownMenu2-selected-text").text($(this).text());
+				renderTextPanel("test-values-btn", getLabTestParameters(selectedId), getLabTests());
+				lastSelectedTestId = selectedId;
+				loadTestValuesChart(selectedId, getLabTestParameters(selectedId)[0].id);
+			}
+			console.log("id = " + selectedId);
+		});
+	}
+
+	var lastSelectedTestId, lastSelectedTestParamId;
+	function resetLastSelectedTestIds() {
+		lastSelectedTestId = getLabTests()[0].id;
+		lastSelectedTestParamId = getLabTestParameters(getLabTests()[0].id)[0].id;
+	}
+
+	$("#test-values-btn").click(function() {
+		resetLastSelectedTestIds();
+		loadTestValuesChart(lastSelectedTestId, lastSelectedTestParamId);
+		removeAllActiveNavStates();
+		$("#li-test-values").addClass("active");
+		renderTextPanel("test-values-btn", getLabTestParameters(getLabTests()[0].id), getLabTests());
+		handleTextPanelDropdownClicks();
+	});
+
+	window.onload = function(){
+		loadPatientsChart();
+		renderTextPanel("patients-btn", null, null);
+	}
+
+	function getLabTests() {
+		return labTests;
+	}
+
+	function getLabTestParameters(labId) {
+		return paramsMap[labId];
+	}
+</script>
 
 <script>
-	var chartOptions1 = {
-		    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-		    responsive : true,
-		    scaleLineColor: "white",
-		    scaleFontColor: "white"
-	};
-	var chartOptions2 = {
-		    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+	var labTests = [], paramsMap = {};
+	@for(l <- labTests) {
+		test = {};
+		test.id = "@l.getId()";
+		test.name = "@l.getName()";
+		params = [];
+		@for(p <- l.getParameters) {
+			param = {};
+			param.id = '@p.getId()';
+			param.name = '@p.getName()';
+			params.push(param);
+		}
+		paramsMap[test.id] = params;
+		test.parameters = params;
+		labTests.push(test);
+	}
+	console.log(JSON.stringify(labTests));
+
+	var chartOptions1 = chartOptions2 = {
 		    responsive : true,
 		    scaleLineColor: "white",
 		    scaleFontColor: "white"
 	};
 	var chartOptions3 = {
-		    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
 		    responsive : true,
 		    scaleLineColor: "white",
 		    scaleFontColor: "white",
 		    segmentStrokeColor : "transparent",
 	};
-	var chart1 = {
-		labels : ["0-50K","50K-100K","100K-150K","150K-200K","200K-250K","250K-300K","300K-350K","350K-400K",">400K"],
+	var baseTestValuesData = {
 		datasets : [
 			{
 				fillColor : "rgba(151,187,205,0.5)",
 				strokeColor : "rgba(151,187,205,0.8)",
 				highlightFill : "rgba(151,187,205,0.75)",
 				highlightStroke : "rgba(151,187,205,1)",
-				data : [23,34,40,62,56,11,35,22,33]
 			}
 		]
 	}
-	var chart2 = {
-			labels : ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+	var basePatientsData = {
 			datasets : [
 				{
-					label: "My Second dataset",
 					fillColor : "rgba(151,187,205,0.2)",
 					strokeColor : "rgba(151,187,205,1)",
 					pointColor : "rgba(151,187,205,1)",
 					pointStrokeColor : "#fff",
 					pointHighlightFill : "#fff",
 					pointHighlightStroke : "rgba(151,187,205,1)",
-					data : [189,243,246,342,208,399,404,803,543,432,789,345]
 				}
 			]
 		}
-	var chart3 = [
+	var baseTestsData = [
 	    				{
-	    					value: 300,
-	    					color:"rgba(130, 40, 40, 0.8)",
-	    					highlight: "rgba(198,49,49, 0.8)",
-	    					label: "Blood"
+	    					color: "rgba(49,118,158,0.8)",
+	    					highlight: "rgba(75,178,237,0.8)"
 	    				},
 	    				{
-	    					value: 50,
-	    					color: "rgba(49,118,158,0.8)",
-	    					highlight: "rgba(75,178,237,0.8)",
-	    					label: "Dengue"
+	    					color:"rgba(130, 40, 40, 0.8)",
+	    					highlight: "rgba(198,49,49, 0.8)"
 	    				}
 	    			];
-	window.onload = function(){
-		var ctx1 = document.getElementById("canvas1").getContext("2d");
-		window.myBar = new Chart(ctx1).Bar(chart1, chartOptions1);
-		var ctx2 = document.getElementById("canvas2").getContext("2d");
-		window.myLine = new Chart(ctx2).Line(chart2, chartOptions2);
-		var ctx3 = document.getElementById("canvas3").getContext("2d");
-		window.myDoughnut = new Chart(ctx3).Doughnut(chart3, chartOptions3);
+	
+	function displayTestValuesChart(data) {
+		$("#loading-chart").hide();
+		var ctx1 = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx1).Bar(data, chartOptions1);
 	}
+
+	function loadTestValuesChart(testId, paramId) {
+		destroyOlderCharts();
+		$("#loading-chart").show();
+		console.log("Fetching from server: test-values with testId: "+ testId + ", paramId: " + paramId);
+		fetchChartData("https://demo3332037.mockable.io/get-chart-data/test-values/"+testId+"/"+paramId, null, function(data) {
+			console.log("onSuccess while fetching test-values data: " + JSON.stringify(data));
+			var completeTestValuesData = baseTestValuesData;
+			completeTestValuesData.labels = data["x-data"];
+			completeTestValuesData.datasets[0].data = data["y-data"];
+			displayTestValuesChart(completeTestValuesData);
+		});	
+	}
+
+	function displayTestsChart() {
+		$("#loading-chart").hide();
+		var ctx3 = document.getElementById("canvas").getContext("2d");
+		window.myDoughnut = new Chart(ctx3).Doughnut(completeTestsData, chartOptions3);
+	}
+
+	function loadTestsChart() {
+		destroyOlderCharts();
+		$("#loading-chart").show();
+		if(completeTestsData != null) {
+			displayTestsChart();
+		}
+		else {
+			console.log("Fetching from server: tests");
+			fetchChartData("https://demo3332037.mockable.io/get-chart-data/tests", null, function(data) {
+				console.log("onSuccess while fetching tests data: " + JSON.stringify(data));
+				completeTestsData = data;
+				for(i in completeTestsData) {
+					completeTestsData[i].color = baseTestsData[i].color;
+					completeTestsData[i].highlight = baseTestsData[i].highlight;
+				}
+				displayTestsChart();
+			});	
+		}
+	}
+	
+	var completePatientsData = null, completeTestsData = null; 
+	
+	function displayPatientsChart(data) {
+		$("#loading-chart").hide();
+		var ctx2 = document.getElementById("canvas").getContext("2d");
+		window.myLine = new Chart(ctx2).Line(completePatientsData, chartOptions2);
+	}
+	
+	function loadPatientsChart() {
+		destroyOlderCharts();
+		$("#loading-chart").show();
+		if(completePatientsData != null) {
+			displayPatientsChart();
+		}
+		else {
+			console.log("Fetching from server: patients");
+			fetchChartData("https://demo3332037.mockable.io/get-chart-data/patients", null, function(data) {
+				console.log("onSuccess while patients data: " + JSON.stringify(data));
+				completePatientsData = basePatientsData;
+				completePatientsData.labels = data["x-data"];
+				completePatientsData.datasets[0].data = data["y-data"];
+				displayPatientsChart();
+			});	
+		}
+	}
+	
+	function removeAllActiveNavStates() {
+		$("#vertical-nav li").each(function(index) {
+			if($("#vertical-nav li").eq(index).hasClass("active")) {
+				$("#vertical-nav li").eq(index).removeClass("active");
+			}
+		});
+	}
+	
+	function destroyOlderCharts() {
+		if(window.myLine != null) {
+			console.log("Destroying chart 1");
+			window.myLine.destroy();
+		}
+		if(window.myDoughnut != null) {
+			console.log("Destroying chart 2");
+			window.myDoughnut.destroy();
+		}
+		if(window.myBar != null) {
+			console.log("Destroying chart 3");
+			window.myBar.destroy();
+		}
+	}
+	
+	function fetchChartData(url, data, onSuccessCallback) {
+		$.ajax({
+		      url: url,
+		      dataType: 'json',
+		      method: "POST",
+		      data: data,
+		      cache: false,
+		      success: function(data) {
+		    	  onSuccessCallback(data);
+		      }.bind(this),
+		      error: function(xhr, status, err) {
+		        console.error("onError while fetching parameters", status, err.toString());
+		      }.bind(this)
+		    });
+	}
+	
 </script>

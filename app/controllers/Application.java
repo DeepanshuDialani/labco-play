@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import models.LabTest;
+import models.LabTestParameter;
 import play.*;
 import play.mvc.*;
 import play.mvc.Http.RequestBody;
@@ -55,7 +56,7 @@ public class Application extends Controller {
     	List<LabTest> labTestsResponse = getLabTests("validAuthToken");
     	return ok(newreport.render(labTestsResponse));
     }
-    
+
     private List<LabTest> getLabTests(String authToken) {
 //    	 TODO: Fetch lab tests from db
     	List<LabTest> labTests = new ArrayList<>();
@@ -64,7 +65,34 @@ public class Application extends Controller {
     	return labTests;
     }
     
+    
+    private List<LabTest> getLabTestsWithParameters(String authToken) {
+//   	 TODO: Fetch lab tests from db
+	   	List<LabTest> labTests = new ArrayList<>();
+	   	labTests.add(new LabTest(345, "Blood", getBloodParameters()));
+	   	labTests.add(new LabTest(346, "Dengue", getDengueParameters()));
+	   	return labTests;
+   }
+    
+    private List<LabTestParameter> getBloodParameters() {
+    	List<LabTestParameter> parameters = new ArrayList<LabTestParameter>();
+    	parameters.add(new LabTestParameter(3456, "RBC"));
+    	parameters.add(new LabTestParameter(3457, "Hb"));
+    	parameters.add(new LabTestParameter(3458, "Reticulocytes"));
+    	parameters.add(new LabTestParameter(3459, "PCV"));
+    	parameters.add(new LabTestParameter(3460, "MCV"));
+    	return parameters;
+    }
+    
+    private List<LabTestParameter> getDengueParameters() {
+    	List<LabTestParameter> parameters = new ArrayList<LabTestParameter>();
+    	parameters.add(new LabTestParameter(4456, "D1"));
+    	parameters.add(new LabTestParameter(4457, "D2"));
+    	parameters.add(new LabTestParameter(4458, "D3"));
+    	return parameters;
+    }
+    
     public Result analytics() {
-    	return ok(analytics.render());
+    	return ok(analytics.render(getLabTestsWithParameters("validAuthToken")));
     }
 }

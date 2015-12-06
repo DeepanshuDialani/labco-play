@@ -1,6 +1,6 @@
 package models;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 public class LabTest {
 	
@@ -10,9 +10,16 @@ public class LabTest {
 
 	private int price;
 	
+	private List<LabTestParameter> parameters;
+	
 	public LabTest(int id, String name) {
 		this.id = id;
 		this.name = name;
+	}
+
+	public LabTest(int id, String name, List<LabTestParameter> parameters) {
+		this(id, name);
+		this.parameters = parameters;
 	}
 	
 	public void setPrice(int price) {
@@ -29,5 +36,9 @@ public class LabTest {
 	
 	public int getPrice() {
 		return price;
+	}
+	
+	public List<LabTestParameter> getParameters() {
+		return parameters;
 	}
 }
