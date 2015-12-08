@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import models.DetailRecord;
 import models.LabTest;
+import models.TestFieldData;
 import play.*;
 import play.mvc.*;
 import play.mvc.Http.RequestBody;
@@ -62,6 +64,34 @@ public class Application extends Controller {
     	labTests.add(new LabTest(345, "Blood"));
     	labTests.add(new LabTest(346, "Dengue"));
     	return labTests;
+    }
+    
+    public Result detailRecord(Long id) {
+    	return ok(detailrecord.render(getDetailRecord()));
+    }
+    
+    private DetailRecord getDetailRecord() {
+    	ArrayList<TestFieldData> fields = new ArrayList<>();
+    	fields.add(new TestFieldData("RBC", "4.7 - 6.1", "4.5", false));
+    	fields.add(new TestFieldData("WBC", "4500 - 10000", "5400", true));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("WBC", "4500 - 10000", "5400", true));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	DetailRecord record = new DetailRecord(1, "Akshay", "Male", "Blood", fields);
+    	
+    	return record;
     }
     
     public Result analytics() {
