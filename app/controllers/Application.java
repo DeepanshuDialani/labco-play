@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import models.DetailRecord;
 import models.LabTest;
+<<<<<<< HEAD
 import models.LabTestParameter;
+=======
+import models.TestFieldData;
+>>>>>>> fa16ccf376bcf50d1e37c4b2f644839ab9428f9a
 import play.*;
 import play.mvc.*;
 import play.mvc.Http.RequestBody;
@@ -65,7 +70,6 @@ public class Application extends Controller {
     	return labTests;
     }
     
-    
     private List<LabTest> getLabTestsWithParameters(String authToken) {
 //   	 TODO: Fetch lab tests from db
 	   	List<LabTest> labTests = new ArrayList<>();
@@ -90,6 +94,33 @@ public class Application extends Controller {
     	parameters.add(new LabTestParameter(4457, "D2"));
     	parameters.add(new LabTestParameter(4458, "D3"));
     	return parameters;
+
+    public Result detailRecord(Long id) {
+    	return ok(detailrecord.render(getDetailRecord()));
+    }
+    
+    private DetailRecord getDetailRecord() {
+    	ArrayList<TestFieldData> fields = new ArrayList<>();
+    	fields.add(new TestFieldData("RBC", "4.7 - 6.1", "4.5", false));
+    	fields.add(new TestFieldData("WBC", "4500 - 10000", "5400", true));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("WBC", "4500 - 10000", "5400", true));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	fields.add(new TestFieldData("Hb", "13.5 - 17.5", "9.5", false));
+    	DetailRecord record = new DetailRecord(1, "Akshay", "Male", "Blood", fields);
+    	
+    	return record;
     }
     
     public Result analytics() {

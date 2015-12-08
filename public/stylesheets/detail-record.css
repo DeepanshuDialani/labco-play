@@ -1,0 +1,25 @@
+#patient-details-container{
+	margin-bottom: 30px
+}
+
+#detail-container {
+	background-color: white;
+	width: 60%;
+    margin-left: 20%;
+    margin-top: 35px;
+    margin-bottom: 30px;
+    border: 0 none;
+	border-radius: 3px;
+	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+	box-sizing: border-box;
+	padding: 20px 50px;
+	overflow: auto;
+}
+
+th {
+	width: 200px
+}
+
+td {
+	width: 200px
+}
