@@ -1,24 +1,74 @@
-<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/login-page.css")">
+<!DOCTYPE html>
 
-<h1 id="elixr-main-logo">Elixr</h1>
-<h4 id="subtext">A smarter way to manage your lab's health records</h4>
+<html lang="en">
+    <head>
+        <title>Elixr</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    	<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    	<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+	    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/login-page.css")">
+	    <link href='https://fonts.googleapis.com/css?family=Raleway:200' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+    	<div id="first-container">
+	    	<div id="navbar-container">
+				<nav class="navbar">
+					<div class="container-fluid">
+		    			<div class="navbar-header">
+							<a id="elixr-logo" class="navbar-brand" href="/">Elixr</a>
+						</div>
+						<ul id="navbar-actions" class="nav navbar-nav navbar-right">
+						<li><a id="login-btn" role="button" class="btn navbar-text navbar-right" href="#second-container">Login</a></li>
+						</ul>
+						
+					</div>
+				</nav>
+			</div>
+			<div id="heading-container" align="center">
+				<h1 id="heading">Managing health records is now easy</h4>
+				<h3 id="subtext">Elixr helps you in tracking & analyzing all of your patients' records so you can focus on doing what matters most - providing high quality health care. </h4>
+			</div>
+		</div>
+		<div id="second-container">
+			<div id="login-container" class="login">
+				<div class="login-screen">
+					<h2 class="login-title">Hospital Login</h2>
+					<form action="/login" method="post">
+						<div class="login-form">
+							<div class="control-group">
+								<input name="email" type="text" class="login-field" value="" placeholder="Username" id="login-name">
+								<label class="login-field-icon fui-user" for="login-name"></label>
+							</div>
+		
+							<div class="control-group">
+								<input type="password" name="password" class="login-field" value="" placeholder="Password" id="login-pass">
+								<label class="login-field-icon fui-lock" for="login-pass"></label>
+							</div>
+	
+							<button id="login-submit-btn" value="submit" type="submit" class="btn btn-primary btn-large btn-block" >Login</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+    </body>
+    <script>
+    $(function() {
+    	  $('a[href*=#]:not([href=#])').click(function() {
+    	    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+    	      var target = $(this.hash);
+    	      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+    	      if (target.length) {
+    	        $('html,body').animate({
+    	          scrollTop: target.offset().top
+    	        }, 1000);
+    	        return false;
+    	      }
+    	    }
+    	  });
+    	});
+    </script>
+</html>
 
-<div class="form-container" id="login-form-container">
-	<form action="/login" method="post">
-	<div class="form-group">
-	    <div class="col-sm-3">
-	      <input type="email" name="email" class="form-control" placeholder="Email">
-	    </div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-3">
-	      <input type="password" name="password" class="form-control" placeholder="Password">
-	    </div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-3">
-	      	<button type="submit" value="submit" class="btn btn-info">Login</button>
-	    </div>
-	</div>
-	 </form>
-</div>

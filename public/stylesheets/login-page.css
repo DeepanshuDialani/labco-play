@@ -1,14 +1,23 @@
-#elixr-main-logo {
+#elixr-logo {
 	font-family: 'Lobster', cursive;
 	color: white;
-	font-size: 200px;
-	margin-left: 5%;
+	font-size: 50px;
+}
+.navbar-header {
+	margin-top: 2%;
+	margin-left: 10%;
 }
 #login-form-container {
 	margin-left: 4%;
 	margin-top: 10%;
 }
 #subtext {
-	color: white;
-	margin-left: 6%;
+	color: #D5E2E2;
+	margin-top: 30%;
+}
+body{
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('http://static1.squarespace.com/static/562006e2e4b0dc6edcb5cbad/t/565326b8e4b00ead850b95f2/1448289979513/header-bg.jpg?format=2500w');
+    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('http://static1.squarespace.com/static/562006e2e4b0dc6edcb5cbad/t/565326b8e4b00ead850b95f2/1448289979513/header-bg.jpg?format=2500w');
+	background-size: cover;
+	text-align: center;
 }
