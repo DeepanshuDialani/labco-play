@@ -11,13 +11,110 @@
 	margin-left: 4%;
 	margin-top: 10%;
 }
+#heading-container {
+	margin-top: 12%;
+}
+#heading {
+	color: #D5E2E2;
+	font-weight: 900;
+}
 #subtext {
 	color: #D5E2E2;
-	margin-top: 30%;
+	width: 50%;
+	font-family: 'Raleway', sans-serif;
 }
-body{
+#navbar-actions {
+	margin-right: 10%;
+	margin-top: 1%;
+}
+#login-btn {
+	color: white;
+	background-color: Transparent;
+    border-color: white;
+    border-width: thin;
+    padding: 10px 20px 10px 20px;
+}
+#login-btn:hover {
+    border-color: #06D9F3;
+    color: #06D9F3;
+}
+#first-container{
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('http://static1.squarespace.com/static/562006e2e4b0dc6edcb5cbad/t/565326b8e4b00ead850b95f2/1448289979513/header-bg.jpg?format=2500w');
     background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('http://static1.squarespace.com/static/562006e2e4b0dc6edcb5cbad/t/565326b8e4b00ead850b95f2/1448289979513/header-bg.jpg?format=2500w');
 	background-size: cover;
 	text-align: center;
+	height: 610px;
+}
+#second-container {
+	height: 500px;
+	text-align: center;
+	background-color: #327E88;
+	padding-top: 75px;
+}
+#login-container {
+	margin: 0 auto;
+	width: 400px;
+}
+.login-screen {
+	height: 350px;
+	background-color: #fff;
+	padding: 30px 15px 40px 15px;
+	border-radius: 5px;
+	overflow: auto;
+}
+.login-title {
+	text-align: center;
+	color: #777;
+	font-weight: 300;
+	margin-bottom: 30px;
+}
+.login-form {
+	text-align: center;
+}
+.control-group {
+	margin-bottom: 10px;
+}
+
+.login-field {
+	text-align: center;
+	background-color: #ECF0F1;
+	border: 0.5px solid transparent;
+	border-radius: 3px;
+	font-size: 16px;
+	font-weight: 200;
+	padding: 10px 0;
+	width: 300px;
+}
+
+.login-field:focus {
+	border: 0.5px solid #3498DB;
+	box-shadow: none;
+}
+
+#login-submit-btn {
+  border: 2px solid transparent;
+  background: #3498DB;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 10px 0;
+  text-decoration: none;
+  text-shadow: none;
+  border-radius: 3px;
+  box-shadow: none;
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+  outline: none;
+}
+
+#login-submit-btn:hover {
+  background-color: #2980B9;
+}
+
+.login-link {
+  font-size: 12px;
+  color: #444;
+  display: block;
+	margin-top: 12px;
 }
