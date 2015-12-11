@@ -18948,7 +18948,7 @@ var dataSet, reportDataMap;
 function linkifyReportFormat(cell, row) {
 	if (row.serial in reportDataMap) {
 		var url = "/lab-record/" + reportDataMap[row.serial].id;
-		return '<a href="' + url + '" target="_blank"> Link </a> ';
+		return '<a class="link-report" href="' + url + '" target="_blank"> Link </a> ';
 	} else {
 		return '--';
 	}

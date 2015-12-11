@@ -1,3 +1,8 @@
+#elixr-logo {
+	margin-left: 117px;
+	margin-top: 5%;
+}
+
 #parent-container {
 	overflow: hidden;
 }
@@ -21,7 +26,7 @@
 	color: #D2D4E0;
 }
 .nav-stacked > li.active > a:hover, .nav-stacked > li.active > a{
-	background-color: #2B71AD;
+	background-color: #5775AF;
 }
 #loading-chart {
 	margin-left: 40%;
@@ -34,7 +39,7 @@
 	padding-right: 15%;
 }
 .panel {
-	background-color: rgba(119, 182, 236, 0.43);
+	background-color: #526DA0	;
 	border: 1px solid transparent;
 	float: left;
 	width: 100%;

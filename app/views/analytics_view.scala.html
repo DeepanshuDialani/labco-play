@@ -1,5 +1,18 @@
 @(labTests: List[LabTest])
 
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Elixr</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+    	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    	<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    	<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    </head>
+    <body style="background-color: #313846">
+
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/analytics.css")">
 <script src="@routes.Assets.versioned("javascripts/bootstrap.min.js")"></script>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -40,6 +53,8 @@
 			<img id="loading-chart" src="@routes.Assets.versioned("images/loading_gears.svg")"></img>
 			<div><canvas id="canvas" class="canvas" ></canvas></div>
 		</div>
+		
+		<div id="my-doughnut-legend"></div>
 	</div>
 </div>
 
@@ -223,12 +238,12 @@
 		}
 	var baseTestsData = [
 	    				{
-	    					color: "rgba(49,118,158,0.8)",
-	    					highlight: "rgba(75,178,237,0.8)"
+	    					color: "rgba(36,126,181,0.8)",
+	    				    highlight: "rgba(75,178,242,0.8)"
 	    				},
 	    				{
 	    					color:"rgba(130, 40, 40, 0.8)",
-	    					highlight: "rgba(198,49,49, 0.8)"
+	    				    highlight: "rgba(198,49,49, 0.8)"
 	    				}
 	    			];
 	
@@ -248,13 +263,14 @@
 			completeTestValuesData.labels = data["x-data"];
 			completeTestValuesData.datasets[0].data = data["y-data"];
 			displayTestValuesChart(completeTestValuesData);
-		});	
+		});
 	}
 
 	function displayTestsChart() {
 		$("#loading-chart").hide();
 		var ctx3 = document.getElementById("canvas").getContext("2d");
 		window.myDoughnut = new Chart(ctx3).Doughnut(completeTestsData, chartOptions3);
+		//document.getElementById('my-doughnut-legend').innerHTML = myDoughnut.generateLegend();
 	}
 
 	function loadTestsChart() {
@@ -343,3 +359,5 @@
 	}
 	
 </script>
+</body>
+</html>

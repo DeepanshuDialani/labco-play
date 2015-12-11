@@ -27,7 +27,7 @@ body {
 	font-size: large;
 	margin-top: 5px;
 	float:left;
-	color: #3A97A2;
+	color: #394A6B;
 	font-size: medium;
 	font-weight: 400;
 }
@@ -72,11 +72,14 @@ body {
 	color: white;
 }
 #add-report-btn:hover {
-	color: #3A97A2;
+	color: #BCE8F1;
 }
 #analytics-btn:hover {
-	color: #3A97A2;
+	color: #BCE8F1;
 }
 #logout-img:hover {
-	color: #3A97A2;
+	color: #BCE8F1;
+}
+.link-report {
+	color: #394A6B
 }

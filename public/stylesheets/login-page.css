@@ -15,7 +15,7 @@
 	margin-top: 12%;
 }
 #heading {
-	color: #D5E2E2;
+	color: #CFE8E8;
 	font-weight: 900;
 }
 #subtext {
@@ -48,7 +48,7 @@
 #second-container {
 	height: 500px;
 	text-align: center;
-	background-color: #327E88;
+	background-color: #394A6B;
 	padding-top: 75px;
 }
 #login-container {
@@ -64,7 +64,7 @@
 }
 .login-title {
 	text-align: center;
-	color: #777;
+	color: #394A6B;
 	font-weight: 300;
 	margin-bottom: 30px;
 }
@@ -93,7 +93,7 @@
 
 #login-submit-btn {
   border: 2px solid transparent;
-  background: #3498DB;
+  background: #394A6B;
   color: #ffffff;
   font-size: 16px;
   line-height: 25px;
@@ -109,7 +109,7 @@
 }
 
 #login-submit-btn:hover {
-  background-color: #2980B9;
+  background-color: #2D5773;
 }
 
 .login-link {
