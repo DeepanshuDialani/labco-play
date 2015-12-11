@@ -35,8 +35,9 @@
     padding: 10px 20px 10px 20px;
 }
 #login-btn:hover {
-    border-color: #06D9F3;
-    color: #06D9F3;
+    border-color: #394A6B;
+    color: white;
+    background-color: #394A6B;
 }
 #first-container{
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('http://static1.squarespace.com/static/562006e2e4b0dc6edcb5cbad/t/565326b8e4b00ead850b95f2/1448289979513/header-bg.jpg?format=2500w');
