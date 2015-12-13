@@ -18,3 +18,5 @@ GET     /new-report                 controllers.Application.newReport()
 GET 	/analytics					controllers.Application.analytics()
 
 GET 	/lab-record/:id				controllers.Application.detailRecord(id: Long)
+
+GET 	/send-notification 			controllers.NotificationsController.handleReportNotificationRequest()

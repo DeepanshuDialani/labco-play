@@ -8,11 +8,10 @@ import models.DetailRecord;
 import models.LabTest;
 import models.LabTestParameter;
 import models.TestFieldData;
-import play.*;
-import play.mvc.*;
+import play.mvc.Controller;
 import play.mvc.Http.RequestBody;
+import play.mvc.Result;
 import utils.Constants;
-import utils.Utils;
 import views.html.*;
 
 public class Application extends Controller {
@@ -139,7 +138,7 @@ public class Application extends Controller {
     	
     	return record;
     }
-    
+
     public Result analytics() {
     	return ok(analytics.render(getLabTestsWithParameters("validAuthToken")));
     }
